@@ -6,11 +6,12 @@ class Program
     private static bool readMeasurementsFromFile(out List<int> measurements, string fileName)
     {
         measurements = new List<int>();
+        // int number;
 
         try
         {
             TextFileReader reader = new TextFileReader(fileName);
-            while (reader.ReadInt(out number))
+            while (reader.ReadInt(out int number))
             {
                 measurements.Add(number);
             }
@@ -30,10 +31,10 @@ class Program
         {
             if (condFound && measurements[i] <= measurements[i - 1] && measurements[i] <= measurements[i + 1])
             {
+                if (max < measurements[i])
                 {
                     max = measurements[i];
                     ind = i;
-                    if (max < measurements[i])
                 }
             }
             else if (!condFound && measurements[i] <= measurements[i - 1] && measurements[i] <= measurements[i + 1])
@@ -52,9 +53,9 @@ class Program
     {
         Console.Write("Enter a filename:");
         string fileName = Console.ReadLine();
-        List<int> measurements = new List<int>();
+        // List<int> measurements = new List<int>();
 
-        if (readMeasurementsFromFile(out measurements, fileName))
+        if (readMeasurementsFromFile(out List<int> measurements, fileName))
         {
             int max, ind;
             if (condMaxSearch(measurements, out max, out ind))
