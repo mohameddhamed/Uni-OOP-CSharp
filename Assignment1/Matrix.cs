@@ -30,12 +30,52 @@ public class Matrix
         // check that i, j are in range
         this._matrix[i, j] = e;
     }
-    public int getElement(int i, int j)
+    public int GetElement(int i, int j)
     {
         // check that i, j are in range
+        if (i >= _size | j >= _size) return 0;
         return this._matrix[i, j];
     }
-    public static Matrix multiply(Matrix m1, Matrix m2)
+    public static Matrix Expand(Matrix m, int amount)
+    {
+        int expandedSize = m._size + amount;
+        // create the bigger matrix filled with zeros
+        Matrix expandedMatrix = new Matrix(expandedSize);
+        // iterate over the smaller matrix, and insert its values into the matrix's slot + amount
+        for (int i = 0; i < m._size; i++)
+        {
+            for (int j = 0; j < m._size; j++)
+            {
+                expandedMatrix.SetElement(i + amount, j + amount, m.GetElement(i, j));
+            }
+        }
+        return expandedMatrix;
+    }
+    public static Matrix Add(Matrix m1, Matrix m2, int amount)
+    {
+        int len = m1._size;
+        Matrix result = new Matrix(len);
+
+        result = Matrix.Expand(m2, amount);
+
+        return Matrix.Add(m1, result);
+    }
+    public static Matrix Add(Matrix m1, Matrix m2)
+    {
+        int len = m1._size;
+        Matrix result = new Matrix(len);
+
+        for (int i = 0; i < len; i++)
+        {
+            for (int j = 0; j < len; j++)
+            {
+                int sum = m1.GetElement(i, j) + m2.GetElement(i, j);
+                result.SetElement(i, j, sum);
+            }
+        }
+        return result;
+    }
+    public static Matrix Multiply(Matrix m1, Matrix m2)
     {
         int len = m1._size;
         // check same size
@@ -51,7 +91,7 @@ public class Matrix
             {
                 int sum = 0;
                 for (int k = 0; k < len; k++)
-                    sum += m1.getElement(i, k) * m2.getElement(k, j);
+                    sum += m1.GetElement(i, k) * m2.GetElement(k, j);
                 result.SetElement(i, j, sum);
             }
         }
