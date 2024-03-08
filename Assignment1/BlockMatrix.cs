@@ -3,11 +3,23 @@ namespace Assignment1;
 public class BlockMatrix
 {
 
-    private int _size;
+    private int _size, _b1_size;
     private Matrix _block1, _block2, _matrix;
+    public BlockMatrix(int b1, int b2)
+    {
+        // check that b1^2 + b2^2 = list.Count
+        _b1_size = b1;
+        _size = b1 + b2;
+
+        _block1 = new Matrix(b1);
+        _block2 = new Matrix(b2);
+
+        _matrix = new Matrix(_size);
+    }
     public BlockMatrix(int b1, int b2, List<int> list)
     {
         // check that b1^2 + b2^2 = list.Count
+        _b1_size = b1;
         _size = b1 + b2;
 
         _block1 = new Matrix(list.GetRange(0, b1 * b1));
@@ -16,6 +28,37 @@ public class BlockMatrix
         _matrix = new Matrix(_size);
         _matrix = Matrix.Add(_matrix, _block1);
         _matrix = Matrix.Add(_matrix, _block2, b1);
+    }
+
+    public static BlockMatrix Add(BlockMatrix m1, BlockMatrix m2)
+    {
+        // if (m1._size != m2._size) throw new NotEqualDimensionsException();
+        // if (m1._b1_size != m2._b1_size) throw new NotEqualBlockDistributionException();
+
+        BlockMatrix result = new BlockMatrix(m1._b1_size, m1._size - m1._b1_size);
+
+        Matrix temp = Matrix.Add(m1._block1, m2._block1);
+        result._matrix = Matrix.Add(result._matrix, temp);
+
+        temp = Matrix.Add(m1._block2, m2._block2);
+        result._matrix = Matrix.Add(result._matrix, temp, result._b1_size);
+
+        return result;
+    }
+    public static BlockMatrix Multiply(BlockMatrix m1, BlockMatrix m2)
+    {
+        // if (m1._size != m2._size) throw new NotEqualDimensionsException();
+        // if (m1._b1_size != m2._b1_size) throw new NotEqualBlockDistributionException();
+
+        BlockMatrix result = new BlockMatrix(m1._b1_size, m1._size - m1._b1_size);
+
+        Matrix temp = Matrix.Multiply(m1._block1, m2._block1);
+        result._matrix = Matrix.Add(result._matrix, temp);
+
+        temp = Matrix.Multiply(m1._block2, m2._block2);
+        result._matrix = Matrix.Add(result._matrix, temp, result._b1_size);
+
+        return result;
     }
 
     public override string ToString()
