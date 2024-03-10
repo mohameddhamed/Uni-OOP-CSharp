@@ -1,0 +1,8 @@
+Implement type of priority queue. The items of the queue consist of two fields: < priority (integer),
+data (string)>. From the queue, we always take out the element with the highest priority. If there are
+more maximums, there is no restriction which to get first. 
+
+Goals:
+1. Implementing types in the operations of which algorithmic patterns are used,
+2. Testing,
+3. Exception handling.
