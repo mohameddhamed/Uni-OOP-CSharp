@@ -55,6 +55,11 @@ class Program
 
                     try
                     {
+                        if (!(matrix1 == null) && !(matrix2 == null))
+                        {
+                            matrix1 = null;
+                            matrix2 = null;
+                        }
                         if (matrix1 == null) matrix1 = new BlockMatrix(b1Filled, b2Filled, customList);
                         else matrix2 = new BlockMatrix(b1Filled, b2Filled, customList);
 
