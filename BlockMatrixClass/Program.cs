@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-// TODO: take out space from beginning and end of the input from user
 class Program
 {
     static void Main(string[] args)
